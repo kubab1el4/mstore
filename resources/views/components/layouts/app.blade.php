@@ -26,11 +26,16 @@
  
     {{-- Right side actions --}}
     <x-slot:actions>
-        <a href="profile">
-            <x-icon name="o-user" />
-        </a>
+        <x-dropdown>
+            <x-slot:trigger>
+                <x-button icon="o-user" class="btn-circle btn-outline" />
+            </x-slot:trigger>
+        
+            <x-menu-item href="login" title="Zaloguj" />
+            <x-menu-item href="register" title="Zarejestruj" />
+        </x-dropdown>
         <label for="cart" class="mr-3">
-            <x-icon name="o-shopping-cart" class="cursor-pointer"/>
+            <x-icon name="o-shopping-cart" class="btn-circle btn-outline cursor-pointer"/>
         </label>
     </x-slot:actions>
 </x-nav>
@@ -70,6 +75,6 @@
             <x-menu-item title="Messages" icon="o-envelope" link="###" />
         </x-menu>
 </x-drawer>
-@livewireScripts
+@livewireScriptConfig
 </body>
 </html>
