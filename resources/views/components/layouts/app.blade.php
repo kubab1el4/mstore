@@ -68,14 +68,13 @@
 @php
     $session_id = Session::getId();
     $cart = \Cart::session($session_id);
-    dd($cart);
+    $items = $cart->getContent();
+    dump($items);
 @endphp
 <x-drawer full-width id="cart" title="Cart" right separator with-close-button class="lg:w-1/5">
- 
-        <x-menu activate-by-route>
-            <x-menu-item title="Home" icon="o-home" link="###" />
-            <x-menu-item title="Messages" icon="o-envelope" link="###" />
-        </x-menu>
+    @foreach($items as $item)
+        <x-list-item :item="$item"/>
+    @endforeach
 </x-drawer>
 @livewireScriptConfig
 </body>

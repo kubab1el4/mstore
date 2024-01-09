@@ -2,7 +2,10 @@
 
 namespace App\Livewire;
 
+use App\Models\Product;
+use Darryldecode\Cart\Cart;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 use Mary\Traits\Toast;
 
@@ -11,6 +14,8 @@ class Welcome extends Component
     use Toast;
 
     public string $search = '';
+
+    protected $listeners = ['postAdded' => '$refresh'];
 
     public bool $drawer = false;
 
@@ -27,6 +32,21 @@ class Welcome extends Component
     public function delete($id): void
     {
         $this->warning("Will delete #$id", 'It is fake.', position: 'toast-bottom');
+    }
+
+    public function addToCart($product): void
+    {
+        $product = Product::find($product);
+        $session_id = Session::getId();
+        $rowId = 456;
+        \Cart::session($session_id)->add([
+        'id' => $rowId,
+        'name' => $product->name,
+        'price' => $product->price,
+        'quantity' => 4,
+        'attributes' => array(),
+        'associatedModel' => $product
+        ]);
     }
 
     // Table headers
