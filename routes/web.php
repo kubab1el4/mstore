@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\AdminPanel;
 use App\Livewire\Welcome;
 use Illuminate\Support\Facades\Route;
 
@@ -16,11 +17,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', Welcome::class);
 
+Route::get('admin', AdminPanel::class);
+
 Route::get('profile', function () {
-
+    return view('dashboard');
 })->middleware('auth');
-
-Route::post('login', Welcome::class);
 
 Route::middleware([
     'auth:sanctum',
