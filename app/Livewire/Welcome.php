@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Product;
+use App\Storage\DBStorage;
 use Darryldecode\Cart\Cart;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
@@ -38,15 +39,28 @@ class Welcome extends Component
     {
         $product = Product::find($product);
         $session_id = Session::getId();
-        $rowId = 456;
-        \Cart::session($session_id)->add([
-        'id' => $rowId,
-        'name' => $product->name,
-        'price' => $product->price,
-        'quantity' => 4,
-        'attributes' => array(),
-        'associatedModel' => $product
-        ]);
+        $cart = \Cart::session($session_id);
+        $items = $cart->getContent();
+        $cartProductID = $product->category . $product->id;
+        if ($cart->get($cartProductID) != null)
+        {
+            $cart->update($cartProductID,[
+                'quantity' => $cart->get($cartProductID)->quantity++
+                ]);
+        } else
+        {
+            $cart->add([
+            'id' => $cartProductID,
+            'name' => $product->name,
+            'price' => $product->price,
+            'quantity' => 1,
+            'attributes' => array(),
+            'associatedModel' => $product
+            ]);
+        }
+        $storage = new DBStorage;
+        $storage->put($session_id, $cart->getContent());
+        $this->dispatch('addedToCart');
     }
 
     // Table headers
@@ -55,8 +69,9 @@ class Welcome extends Component
         return [
             ['key' => 'id', 'label' => '#', 'class' => 'w-1'],
             ['key' => 'name', 'label' => 'Name', 'class' => 'w-64'],
-            ['key' => 'age', 'label' => 'Age', 'class' => 'w-20'],
-            ['key' => 'email', 'label' => 'E-mail', 'sortable' => false],
+            ['key' => 'description', 'label' => 'Description', 'class' => 'w-20'],
+            ['key' => 'price', 'label' => 'Price', 'class' => 'w-64'],
+            ['key' => 'category', 'label' => 'Category'],
         ];
     }
 
@@ -66,23 +81,15 @@ class Welcome extends Component
      * On real projects you do it with Eloquent collections.
      * Please, refer to Mary docs to see the eloquent examples.
      */
-    public function users(): Collection
+    public function products(): Collection
     {
-        return collect([
-            ['id' => 1, 'name' => 'Mary', 'email' => 'mary@mary-ui.com', 'age' => 23],
-            ['id' => 2, 'name' => 'Giovanna', 'email' => 'giovanna@mary-ui.com', 'age' => 7],
-            ['id' => 3, 'name' => 'Marina', 'email' => 'marina@mary-ui.com', 'age' => 5],
-        ])
-            ->sortBy([[...array_values($this->sortBy)]])
-            ->when($this->search, function (Collection $collection) {
-                return $collection->filter(fn(array $item) => str($item['name'])->contains($this->search, true));
-            });
+        return Product::all();
     }
 
     public function render()
     {
         return view('livewire.welcome', [
-            'users' => $this->users(),
+            'products' => $this->products(),
             'headers' => $this->headers()
         ]);
     }
