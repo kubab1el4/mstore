@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Product;
 use Illuminate\Support\Collection;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Mary\Traits\Toast;
 use Session;
@@ -13,6 +14,12 @@ class AdminPanel extends Component
     use Toast;
 
     public string $search = '';
+
+    // #[Rule(['files.*' => 'image|max:1024'])]
+    // public array $files = [];
+
+    // #[Rule('required')]
+    // public Collection $library;
 
     protected $listeners = ['productCreated' => '$refresh'];
 
