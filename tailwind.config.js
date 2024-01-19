@@ -20,5 +20,10 @@ export default {
         },
     },
 
-    plugins: [require("daisyui"), forms, typography],
+    plugins: [
+        require("daisyui"),
+        require('tailwind-scrollbar-hide'),
+        forms,
+        typography
+    ],
 };
