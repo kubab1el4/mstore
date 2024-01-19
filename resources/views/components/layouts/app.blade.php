@@ -6,12 +6,15 @@
 
         <title>{{ $title ?? 'Page Title' }}</title>
 
+        <link rel="preconnect" href="https://fonts.bunny.net">
+        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+
         <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/robsontenorio/mary@0.44.2/libs/currency/currency.js"></script>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
 </head>
 
-<body class="no-scrollbar min-h-screen font-sans antialiased">
+<body class="overflow-hidden min-h-screen font-sans antialiased">
 
 {{-- The navbar with `sticky` and `full-width` --}}
 <x-nav sticky full-width>
@@ -62,7 +65,7 @@
     {{-- Footer area --}}
     <x-slot:footer>
         <hr />
-        <div class="absolute inset-x-0 bottom-0 p-6">
+        <div class="overflow-hidden absolute inset-x-0 bottom-0 p-6">
             Footer
         </div>
     </x-slot:footer>
@@ -74,15 +77,8 @@
             <x-menu-item title="Messages" icon="o-envelope" link="###" />
         </x-menu>
 </x-drawer>
-@php
-    $session_id = Session::getId();
-    $cart = \Cart::session($session_id);
-    $items = $cart->getContent();
-@endphp
-<x-drawer full-width id="cart" title="Cart" right separator with-close-button class="lg:w-1/5">
-    @foreach($items as $item)
-        <x-list-item :item="$item"/>
-    @endforeach
+<x-drawer full-width id="cart" title="Cart" right separator with-close-button class="overflow-y-clip w-1/3 h-screen">
+    <livewire:item-list></livewire:item-list>
 </x-drawer>
 @livewireScriptConfig
 </body>

@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Product;
 use App\Storage\DBStorage;
 use Darryldecode\Cart\Cart;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
@@ -16,7 +17,7 @@ class Welcome extends Component
 
     public string $search = '';
 
-    protected $listeners = ['postAdded' => '$refresh'];
+    protected $listeners = ['addedToCart' => '$refresh'];
 
     public bool $drawer = false;
 
@@ -35,7 +36,7 @@ class Welcome extends Component
         $this->warning("Will delete #$id", 'It is fake.', position: 'toast-bottom');
     }
 
-    public function addToCart($product): void
+    public function addToCart($product): Redirector
     {
         $product = Product::find($product);
         $session_id = Session::getId();
@@ -60,7 +61,7 @@ class Welcome extends Component
         }
         $storage = new DBStorage;
         $storage->put($session_id, $cart->getContent());
-        $this->dispatch('addedToCart');
+        return redirect(request()->header('Referer'));
     }
 
     // Table headers
