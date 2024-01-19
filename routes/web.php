@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\AdminPanel;
+use App\Livewire\Dashboard;
 use App\Livewire\Welcome;
 use Illuminate\Support\Facades\Route;
 
@@ -19,16 +20,12 @@ Route::get('/', Welcome::class);
 
 Route::get('admin', AdminPanel::class);
 
-Route::get('profile', function () {
-    return view('dashboard');
-})->middleware('auth');
+Route::get('profile', Dashboard::class)->middleware('auth');
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('profile', Dashboard::class)->name('dashboard');
 });
