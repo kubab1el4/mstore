@@ -12,6 +12,12 @@
         <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/robsontenorio/mary@0.44.2/libs/currency/currency.js"></script>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
+
+        <style type="text/css">
+            .parent > div:nth-of-type(2){
+                height: 100%;
+            }
+        </style>
 </head>
 
 <body class="overflow-hidden min-h-screen font-sans antialiased">
@@ -73,12 +79,14 @@
 <x-drawer full-width id="main-drawer" title="Options" left separator with-close-button class="lg:w-1/3">
 
         <x-menu activate-by-route>
-            <x-menu-item title="Home" icon="o-home" link="###" />
-            <x-menu-item title="Messages" icon="o-envelope" link="###" />
+            <x-menu-item title="Sklep" icon="o-home" link="/" />
         </x-menu>
 </x-drawer>
-<x-drawer full-width id="cart" title="Cart" right separator with-close-button class="overflow-y-clip w-1/3 h-screen">
+<x-drawer full-width id="cart" title="Cart" right separator with-close-button class="parent overflow-y-clip w-1/3 h-screen">
+    <div class="min-h-full flex flex-col justify-between">
     <livewire:item-list></livewire:item-list>
+    <livewire:checkout-button></livewire:checkout-button>
+    </div>
 </x-drawer>
 @livewireScriptConfig
 </body>

@@ -1,9 +1,6 @@
 <div>
     <!-- HEADER -->
     <x-header title="Hello" separator progress-indicator>
-        <x-slot:actions>
-            <livewire:add-product-button />
-        </x-slot:actions>
     </x-header>
 
     <div class="py-12">
