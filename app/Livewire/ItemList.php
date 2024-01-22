@@ -19,9 +19,13 @@ class ItemList extends Component
         $session_id = Session::getId();
         $cart = \Cart::session($session_id);
         $productBean = $cart->get($product);
-        $cart->update($product, array(
+        if ($cart->get($product)->quantity > 1) {
+        $cart->update($product, [
             'quantity' => -1
-        ));
+        ]);
+        } else {
+            $cart->remove($product);
+        }
         $storage = new DBStorage;
         $storage->put($session_id, $cart->getContent());
         $this->dispatch('cartUpdated');
@@ -31,9 +35,9 @@ class ItemList extends Component
     {
         $session_id = Session::getId();
         $cart = \Cart::session($session_id);
-        $items = $cart->getContent();
-        foreach ($items as $item) {
-            $cart->remove($item['id']);
+        $products = $cart->getContent();
+        foreach ($products as $product) {
+            $cart->remove($product['id']);
         }
         $storage = new DBStorage;
         $storage->put($session_id, $cart->getContent());
