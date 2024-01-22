@@ -46,7 +46,7 @@ class Welcome extends Component
         if ($cart->get($cartProductID) != null)
         {
             $cart->update($cartProductID,[
-                'quantity' => $cart->get($cartProductID)->quantity++
+                'quantity' => 1
                 ]);
         } else
         {
