@@ -20,12 +20,16 @@ Route::get('/', Welcome::class);
 
 Route::get('admin', AdminPanel::class);
 
+Route::get('checkout', Dashboard::class);
+
 Route::get('profile', Dashboard::class)->middleware('auth');
+
+Route::get('logout', Dashboard::class)->middleware('auth');
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('profile', Dashboard::class)->name('dashboard');
+    Route::get('profile', Dashboard::class);
 });

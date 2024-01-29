@@ -11,11 +11,25 @@
 
     <!-- TABLE  -->
     <x-card>
-        <x-table :headers="$headers" :rows="$products" :sort-by="$sortBy">
-            @scope('actions', $product)
-            <x-button icon="s-shopping-bag" wire:click="addToCart({{ $product['id'] }})" spinner class="btn-ghost btn-sm text-red-500" />
-            @endscope
-        </x-table>
+        @php
+        $products = \App\Models\Product::all();
+        @endphp
+        <div class="grid grid-cols-4 gap-4">
+        @foreach ($products as $product)
+            <x-card title="{{$product->name}}">
+                {{$product->price}}
+
+                <x-slot:figure>
+                    <img src="https://picsum.photos/500/200" />
+                </x-slot:figure>
+                <x-slot:menu>
+                    <x-button icon="o-share" class="btn-circle btn-sm" />
+                    <x-icon name="o-heart" class="cursor-pointer" />
+                </x-slot:menu>
+                <x-button icon="s-shopping-bag" wire:click="addToCart({{ $product['id'] }})" spinner class="btn-ghost btn-sm text-red-500" />
+            </x-card>
+        @endforeach
+    </div>
     </x-card>
 
     <!-- FILTER DRAWER -->

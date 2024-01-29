@@ -17,7 +17,7 @@
             option-value="id"
             option-label="name"
             placeholder="Wybierz kategorię"
-            placeholder-value="0" {{-- Set a value for placeholder. Default is `null` --}}
+            placeholder-value="0"
             wire:model="category" />
 
             <x-slot:actions>

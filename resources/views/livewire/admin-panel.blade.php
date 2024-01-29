@@ -11,13 +11,8 @@
         <x-table :headers="$headers" :rows="$products" :sort-by="$sortBy">
             @scope('actions', $product)
             <x-button icon="m-x-circle" wire:click="delete({{ $product['id'] }})" spinner class="btn-ghost btn-sm text-red-500" />
+                <livewire:add-media-button :product="$product"/>
             @endscope
-            {{-- <x-image-library
-            wire:model="files"                 {{-- Temprary files --}}
-            wire:library="library"             {{-- Library metadata property --}}
-            :preview="$library"                {{-- Preview control --}}
-            label="Product images"
-            hint="Max 100Kb" /> --}}
         </x-table>
     </x-card>
 

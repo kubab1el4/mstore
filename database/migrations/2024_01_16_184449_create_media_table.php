@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('media', function (Blueprint $table) {
             $table->id();
             $table->string('path');
+            $table->json('library')->nullable();
             $table->integer('mediable_id');
             $table->string('mediable_type');
             $table->timestamps();

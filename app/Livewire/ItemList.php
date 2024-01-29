@@ -9,6 +9,8 @@ use Session;
 
 class ItemList extends Component
 {
+    protected $listeners = ['itemAddedToCart' => '$refresh'];
+
     public function render()
     {
         return view('livewire.item-list');

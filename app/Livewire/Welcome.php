@@ -17,8 +17,6 @@ class Welcome extends Component
 
     public string $search = '';
 
-    protected $listeners = ['addedToCart' => '$refresh'];
-
     public bool $drawer = false;
 
     public array $sortBy = ['column' => 'name', 'direction' => 'asc'];
@@ -36,7 +34,7 @@ class Welcome extends Component
         $this->warning("Will delete #$id", 'It is fake.', position: 'toast-bottom');
     }
 
-    public function addToCart($product): Redirector
+    public function addToCart($product): void
     {
         $product = Product::find($product);
         $session_id = Session::getId();
@@ -61,7 +59,7 @@ class Welcome extends Component
         }
         $storage = new DBStorage;
         $storage->put($session_id, $cart->getContent());
-        return redirect(request()->header('Referer'));
+        $this->dispatch('itemAddedToCart');
     }
 
     // Table headers

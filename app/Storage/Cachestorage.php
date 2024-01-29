@@ -1,6 +1,6 @@
 <?PHP
 
-namespace App\Cart;
+namespace App\Storage;
 
 use Carbon\Carbon;
 use Cookie;

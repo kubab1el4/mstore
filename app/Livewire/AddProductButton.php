@@ -29,7 +29,7 @@ class AddProductButton extends Component
         $product->name = $this->name;
         $product->description = $this->description;
         $product->price = $this->price;
-        $product->category = $this->category;
+        $product->category_id = $this->category;
         $product->save();
         $this->addProductModal = false;
         $this->dispatch('productCreated');

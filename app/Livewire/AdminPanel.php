@@ -15,12 +15,6 @@ class AdminPanel extends Component
 
     public string $search = '';
 
-    // #[Rule(['files.*' => 'image|max:1024'])]
-    // public array $files = [];
-
-    // #[Rule('required')]
-    // public Collection $library;
-
     protected $listeners = ['productCreated' => '$refresh'];
 
     public bool $drawer = false;

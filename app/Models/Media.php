@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Media extends Model
@@ -15,6 +14,10 @@ class Media extends Model
         'path',
         'mediable_id',
         'mediable_type'
+    ];
+
+    protected $casts = [
+        'library' => AsCollection::class,
     ];
 
     public function mediable(): MorphTo {

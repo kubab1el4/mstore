@@ -1,5 +1,5 @@
 <div>
-    <x-button class="btn-primary" wire:click="checkOut()">
+    <x-button class="btn-primary" href=checkout>
         Przejdź do płatności 😃
     </x-button>
 </div>
